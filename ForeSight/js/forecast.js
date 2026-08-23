@@ -1,11 +1,4 @@
-/**
- * PURE FUNCTIONS ONLY - no DOM access, no localStorage, no console.log, no imports.
- */
 window.Forecast = {
-    /**
-     * Builds an array of daily demand totals over the windowDays ending on todayISO.
-     * Zeros are included for days with no sales.
-     */
     buildDailyDemandSeries: function(sales, windowDays, todayISO) {
         const series = new Array(windowDays).fill(0);
         const todayDate = new Date(todayISO);
@@ -23,9 +16,6 @@ window.Forecast = {
         return series;
     },
 
-    /**
-     * Calculates the average of an array of numbers.
-     */
     average: function(numbers) {
         if (numbers.length === 0) return 0;
         let sum = 0;
@@ -35,9 +25,6 @@ window.Forecast = {
         return sum / numbers.length;
     },
 
-    /**
-     * Calculates the population standard deviation of an array of numbers.
-     */
     standardDeviation: function(numbers) {
         if (numbers.length === 0) return 0;
         const avg = this.average(numbers);
@@ -49,10 +36,6 @@ window.Forecast = {
         return Math.sqrt(sumSqDiff / numbers.length);
     },
 
-    /**
-     * Calculates forecast metrics based on sales history and current stock.
-     * Safety stock is the buffer that covers demand being higher than average while we wait for the supplier.
-     */
     calculateForecast: function(options) {
         const sales = options.sales;
         const currentStock = options.currentStock;

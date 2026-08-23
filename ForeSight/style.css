@@ -249,8 +249,6 @@ th {
     font-weight: 600;
 }
 
-/* Removed alternating row background to show status colors fully */
-
 td:nth-child(n+3) {
     text-align: right;
     font-variant-numeric: tabular-nums;
@@ -342,7 +340,6 @@ span.status-ok {
     }
 }
 
-/* Modal Styles */
 .modal {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -353,7 +350,6 @@ span.status-ok {
     z-index: 1000;
     backdrop-filter: blur(4px);
     
-    /* Animation base */
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -376,7 +372,6 @@ span.status-ok {
     flex-direction: column;
     overflow: hidden;
     
-    /* Animation base */
     transform: translateY(20px) scale(0.95);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

@@ -1,12 +1,3 @@
-/**
- * 6 products and expected status:
- * 1. Blue Cotton T-Shirt (M) - fast steady, low stock, long lead time -> REORDER_NOW
- * 2. Black Hoodie (L) - fast steady, high stock -> OK
- * 3. Ceramic Mug - slow steady, moderate stock -> OK
- * 4. Wireless Mouse - erratic, moderate stock -> LOW or REORDER_NOW
- * 5. Leather Wallet - brand new, zero sales -> OK
- * 6. Sunscreen SPF 50 - seasonal (spikes in last 10 days) -> varies by window
- */
 window.DemoData = {
     load: function() {
         window.Store.clearAll();

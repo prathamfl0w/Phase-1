@@ -1,6 +1,4 @@
-// LocalStorage data layer for Inventory Reorder Point
 window.Store = {
-    // Gets all products from localStorage
     getProducts: function() {
         try {
             const data = localStorage.getItem("irp_products");
@@ -10,7 +8,6 @@ window.Store = {
         }
     },
 
-    // Gets all sales from localStorage
     getSales: function() {
         try {
             const data = localStorage.getItem("irp_sales");
@@ -20,17 +17,14 @@ window.Store = {
         }
     },
 
-    // Saves products array to localStorage
     saveProducts: function(array) {
         localStorage.setItem("irp_products", JSON.stringify(array));
     },
 
-    // Saves sales array to localStorage
     saveSales: function(array) {
         localStorage.setItem("irp_sales", JSON.stringify(array));
     },
 
-    // Adds a new product and returns it with a generated id
     addProduct: function(productWithoutId) {
         const products = this.getProducts();
         const id = this.generateId();
@@ -46,7 +40,6 @@ window.Store = {
         return product;
     },
 
-    // Adds a new sale, subtracts from product stock, and returns the sale
     addSale: function(saleWithoutId) {
         const sales = this.getSales();
         const products = this.getProducts();
@@ -70,18 +63,15 @@ window.Store = {
         return sale;
     },
 
-    // Gets all sales for a specific product ID
     getSalesForProduct: function(productId) {
         return this.getSales().filter(s => s.productId === productId);
     },
 
-    // Clears all project data from localStorage
     clearAll: function() {
         localStorage.removeItem("irp_products");
         localStorage.removeItem("irp_sales");
     },
 
-    // Generates a unique string ID
     generateId: function() {
         return Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
     }
