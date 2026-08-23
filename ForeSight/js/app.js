@@ -2,6 +2,14 @@
     let currentFilter = "ALL";
     let lastRenderedRows = [];
 
+    if (!document.getElementById("modal")) {
+        const modal = document.createElement("div");
+        modal.id = "modal";
+        modal.className = "modal";
+        modal.innerHTML = '<div class="modal-content"><div class="modal-header"><h2 id="modal-title">Products</h2><button id="modal-close" type="button" aria-label="Close">&times;</button></div><div id="modal-list" class="modal-list-container"></div></div>';
+        document.body.appendChild(modal);
+    }
+
     function render() {
         const windowDaysSelect = document.getElementById("window-days");
         const windowDays = Number(windowDaysSelect.value);
@@ -103,6 +111,9 @@
             const catEscaped = document.createElement('div');
             catEscaped.textContent = data.product.category;
 
+            const skuEscaped = document.createElement('div');
+            skuEscaped.textContent = data.product.sku || "";
+
             const daysLeft = data.forecast.daysOfStockLeft === null ? "&mdash;" : data.forecast.daysOfStockLeft;
 
             tr.innerHTML = `
@@ -110,6 +121,7 @@
                     <div style="font-weight: 500; margin-bottom: 0.25rem;">${nameEscaped.innerHTML}</div>
                     <span class="category-badge">${catEscaped.innerHTML}</span>
                 </td>
+                <td>${skuEscaped.innerHTML}</td>
                 <td>${data.product.currentStock}</td>
                 <td style="opacity: 0.5;">${data.product.leadTimeDays}d</td>
                 <td>${data.forecast.avgDailyDemand}</td>
@@ -194,13 +206,14 @@
     document.getElementById("product-form").addEventListener("submit", function (e) {
         e.preventDefault();
         const nameInput = document.getElementById("product-name");
+        const skuInput = document.getElementById("product-sku");
 
         const categoryInput = document.getElementById("product-category");
         const stockInput = document.getElementById("product-stock");
         const leadtimeInput = document.getElementById("product-leadtime");
         const costInput = document.getElementById("product-cost");
 
-        if (nameInput.value.trim() === "") return;
+        if (nameInput.value.trim() === "" || skuInput.value.trim() === "") return;
         const stock = Number(stockInput.value);
         const leadtime = Number(leadtimeInput.value);
         const cost = Number(costInput.value);
@@ -209,6 +222,7 @@
 
         window.Store.addProduct({
             name: nameInput.value.trim(),
+            sku: skuInput.value.trim(),
 
             category: categoryInput.value.trim(),
             currentStock: stock,
