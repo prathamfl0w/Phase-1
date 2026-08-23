@@ -105,7 +105,6 @@ The result is never below zero.
 {
   id,
   name,
-  sku,
   category,
   currentStock,
   leadTimeDays,
@@ -136,7 +135,6 @@ YYYY-MM-DD
 {
   productId,
   name,
-  sku,
   currentStock,
   leadTimeDays,
   avgDailyDemand,

@@ -10,7 +10,7 @@ window.DemoData = {
             { name: "🥚 Farm Fresh Eggs (Dozen)", category: "Groceries", currentStock: 80, leadTimeDays: 3, unitCost: 60 },
             { name: "🥛 2% Milk (1 Gallon)", category: "Groceries", currentStock: 50, leadTimeDays: 2, unitCost: 55 },
             { name: "🧀 Sharp Cheddar Block", category: "Groceries", currentStock: 40, leadTimeDays: 5, unitCost: 85 },
-            { name: "🥩 Grass-fed Ground Beef", category: "Groceries", currentStock: 25, leadTimeDays: 3, unitCost: 150 },
+            { name: "🍗 Fresh Chicken Breast", category: "Groceries", currentStock: 25, leadTimeDays: 3, unitCost: 180 },
             
             // Stationery
             { name: "📓 A5 Ruled Notebook", category: "Stationery", currentStock: 200, leadTimeDays: 10, unitCost: 120 },
@@ -49,19 +49,6 @@ window.DemoData = {
             { name: "🕰️ Vintage Desk Clock", category: "Decorations", currentStock: 15, leadTimeDays: 30, unitCost: 800 }
         ];
         
-        // Give every demo product a readable SKU so the dashboard table is complete.
-        const categoryPrefix = {
-            Groceries: "GRC",
-            Stationery: "STN",
-            Clothing: "CLT",
-            Accessories: "ACC",
-            Decorations: "DEC"
-        };
-
-        for (let i = 0; i < products.length; i++) {
-            products[i].sku = `${categoryPrefix[products[i].category]}-${String(i + 1).padStart(3, "0")}`;
-        }
-
         const savedProducts = [];
         for (let i = 0; i < products.length; i++) {
             savedProducts.push(window.Store.addProduct(products[i]));
