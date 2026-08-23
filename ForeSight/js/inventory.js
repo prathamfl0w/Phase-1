@@ -1,4 +1,10 @@
 (function () {
+    const favicon = document.createElement("link");
+    favicon.rel = "icon";
+    favicon.type = "image/svg+xml";
+    favicon.href = "favicon.svg";
+    document.head.appendChild(favicon);
+
     const todayISO = () => new Date().toISOString().split("T")[0];
     const escape = (value) => { const el = document.createElement("span"); el.textContent = value; return el.innerHTML; };
     function toast(message) { const el = document.getElementById("toast"); el.textContent = message; el.classList.remove("hidden"); setTimeout(() => el.classList.add("hidden"), 2500); }

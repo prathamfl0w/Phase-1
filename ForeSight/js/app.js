@@ -1,4 +1,11 @@
 (function () {
+    // Register the ForeSight mark as the browser-tab favicon.
+    const favicon = document.createElement("link");
+    favicon.rel = "icon";
+    favicon.type = "image/svg+xml";
+    favicon.href = "favicon.svg";
+    document.head.appendChild(favicon);
+
     let currentFilter = "ALL";
     let lastRenderedRows = [];
 
@@ -112,7 +119,7 @@
             catEscaped.textContent = data.product.category;
 
             const skuEscaped = document.createElement('div');
-            skuEscaped.textContent = data.product.sku || "";
+            skuEscaped.textContent = data.product.sku || "—";
 
             const daysLeft = data.forecast.daysOfStockLeft === null ? "&mdash;" : data.forecast.daysOfStockLeft;
 
@@ -373,6 +380,7 @@
         const saleCard = document.querySelector(".sale-card");
         const forecastPanel = document.querySelector(".workspace-card:not(.sale-card)");
         const headerSaleLink = document.querySelector(".quick-actions .button-secondary");
+        const headerProductLink = document.querySelector(".quick-actions .button-link");
 
         if (saleCard && forecastPanel) {
             forecastPanel.id = "forecast-panel";
@@ -381,6 +389,10 @@
 
         if (headerSaleLink) {
             headerSaleLink.remove();
+        }
+
+        if (headerProductLink) {
+            headerProductLink.remove();
         }
 
         const todayISO = new Date().toISOString().split('T')[0];

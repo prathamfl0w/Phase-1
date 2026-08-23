@@ -1,4 +1,10 @@
 (function () {
+    const favicon = document.createElement("link");
+    favicon.rel = "icon";
+    favicon.type = "image/svg+xml";
+    favicon.href = "favicon.svg";
+    document.head.appendChild(favicon);
+
     const iso = () => new Date().toISOString().split("T")[0];
     const statusClass = status => status === "REORDER_NOW" ? "status-reorder" : status === "LOW" ? "status-low" : "status-ok";
     const label = status => status === "REORDER_NOW" ? "Reorder now" : status === "LOW" ? "Running low" : "Healthy";

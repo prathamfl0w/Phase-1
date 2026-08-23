@@ -80,20 +80,25 @@
     background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 10%, var(--card)), var(--card));
     border-left: 4px solid var(--brand);
 }
-.sale-card form { align-items: end; }
-.sale-card button { min-height: 43px; }
+.sale-card form { align-items: end; grid-template-columns: repeat(4, 1fr); min-width: 0; }
+.sale-card .form-row { min-width: 0; }
+.sale-card input, .sale-card select { min-width: 0; width: 100%; }
+.sale-card button { align-self: end; grid-column: 1 / -1; min-height: 43px; white-space: nowrap; }
 
-#forecast-panel { padding: 0; overflow: hidden; }
-#forecast-panel .section-toolbar {
+.workspace-card:not(.sale-card) { padding: 0; overflow: hidden; }
+.workspace-card:not(.sale-card) .section-toolbar {
     align-items: center;
-    background: var(--paper);
+    background: linear-gradient(90deg, var(--paper), var(--canvas));
     border-bottom: 1px solid var(--line);
     margin: 0;
     padding: 1.4rem 1.5rem;
 }
-#forecast-panel .table-scroll { border: 0; border-radius: 0; }
-#forecast-panel #empty-state { padding: 2rem 1.5rem; }
-#forecast-panel .toolbar-actions button { min-height: 40px; }
+.workspace-card:not(.sale-card) .section-toolbar h2 { font-size: 1.25rem; letter-spacing: -.02em; }
+.workspace-card:not(.sale-card) .table-scroll { border: 0; border-radius: 0; }
+.workspace-card:not(.sale-card) #empty-state { padding: 2rem 1.5rem; }
+.workspace-card:not(.sale-card) .toolbar-actions { align-items: center; }
+.workspace-card:not(.sale-card) .toolbar-actions select { background: var(--card); min-height: 40px; }
+.workspace-card:not(.sale-card) .toolbar-actions button { min-height: 40px; }
 
 @media (max-width: 850px) {
     .summary-card .count { font-size: 2rem; }
@@ -101,24 +106,120 @@
 }
 
 /* Forecast table: fixed visual cues make wide data easier to scan. */
-#forecast-table { min-width: 1240px; table-layout: auto; }
+#forecast-table { min-width: 1320px; table-layout: fixed; }
 #forecast-table th:first-child,
-#forecast-table td:first-child { min-width: 235px; }
+#forecast-table td:first-child { width: 250px; }
 #forecast-table th:nth-child(2),
-#forecast-table td:nth-child(2) { min-width: 100px; color: var(--muted); font-weight: 750; text-align: left; }
-#forecast-table th:nth-child(n+3),
-#forecast-table td:nth-child(n+3) { min-width: 92px; }
+#forecast-table td:nth-child(2) { color: var(--muted); font-weight: 750; text-align: left; width: 105px; }
+#forecast-table th:nth-child(3), #forecast-table td:nth-child(3) { width: 85px; }
+#forecast-table th:nth-child(4), #forecast-table td:nth-child(4) { width: 90px; }
+#forecast-table th:nth-child(n+5):nth-child(-n+10), #forecast-table td:nth-child(n+5):nth-child(-n+10) { width: 105px; }
+#forecast-table th:nth-child(11), #forecast-table td:nth-child(11) { width: 120px; }
+
+/* Preserve readable metric headers: a wide table scrolls instead of squeezing labels together. */
+#forecast-table { min-width: 1580px; }
+#forecast-table th:first-child, #forecast-table td:first-child { width: 310px; }
+#forecast-table th:nth-child(3), #forecast-table td:nth-child(3) { width: 100px; }
+#forecast-table th:nth-child(4), #forecast-table td:nth-child(4) { width: 125px; }
+#forecast-table th:nth-child(5), #forecast-table td:nth-child(5) { width: 185px; }
+#forecast-table th:nth-child(7), #forecast-table td:nth-child(7) { width: 150px; }
+#forecast-table th:nth-child(8), #forecast-table td:nth-child(8) { width: 160px; }
+#forecast-table th:nth-child(9), #forecast-table td:nth-child(9) { width: 120px; }
+#forecast-table th:nth-child(10), #forecast-table td:nth-child(10) { width: 175px; }
+#forecast-table th:nth-child(11), #forecast-table td:nth-child(11) { width: 140px; }
+#forecast-table th {
+    line-height: 1.25;
+    overflow: visible;
+    padding: .85rem .7rem;
+    text-overflow: clip;
+    white-space: normal;
+}
+
+/* One alignment rule for the compact metric columns keeps headers and values on the same axis. */
+#forecast-table th:not(:first-child),
+#forecast-table td:not(:first-child) {
+    text-align: center !important;
+}
+#forecast-table th:first-child,
+#forecast-table td:first-child {
+    text-align: left !important;
+}
 #forecast-table td { vertical-align: middle; }
 #forecast-table td:first-child > div { color: var(--ink); font-weight: 800 !important; }
 .category-badge { background: var(--canvas); border: 1px solid var(--line); border-radius: 999px; color: var(--muted); display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .04em; padding: .18rem .42rem; text-transform: uppercase; }
 
 /* Strong, high-contrast KPI colours - important overrides the generic button style. */
-#stat-total.summary-card { background: #e8faf6 !important; border-color: #78d3c0; }
+#stat-total.summary-card { background: #fbfdfc !important; border-color: #dce8e4; }
 #stat-total .count, #stat-total .label { color: #00685a !important; }
-#stat-reorder.summary-card { background: #fff0ed !important; border-color: #f0ab9e; }
+#stat-reorder.summary-card { background: #fefcfb !important; border-color: #eee0dc; }
 #stat-reorder .count, #stat-reorder .label { color: #b42318 !important; }
-#stat-low.summary-card { background: #fff7e5 !important; border-color: #e5b960; }
-#stat-low .count, #stat-low .label { color: #8c4f00 !important; }
-#stat-ok.summary-card { background: #e9f9ef !important; border-color: #86d2a2; }
+#stat-low.summary-card { background: #fffdf9 !important; border-color: #eee5d0; }
+#stat-low .count, #stat-low .label { color: #8a4d00 !important; }
+#stat-ok.summary-card { background: #fbfdfb !important; border-color: #dbe9df; }
 #stat-ok .count, #stat-ok .label { color: #087443 !important; }
 .summary-card .label { font-weight: 850; opacity: 1; }
+
+/* In dark mode, use quiet dark-tinted KPI surfaces instead of bright white cards. */
+@media (prefers-color-scheme: dark) {
+    #stat-total.summary-card { background: #173833 !important; border-color: #2e6258; }
+    #stat-total .count, #stat-total .label { color: #65d5bd !important; }
+    #stat-reorder.summary-card { background: #3d2928 !important; border-color: #71433e; }
+    #stat-reorder .count, #stat-reorder .label { color: #ff9a8a !important; }
+    #stat-low.summary-card { background: #3d3523 !important; border-color: #6e5b30; }
+    #stat-low .count, #stat-low .label { color: #f3c96a !important; }
+    #stat-ok.summary-card { background: #203a2d !important; border-color: #3c6b50; }
+    #stat-ok .count, #stat-ok .label { color: #89d8a8 !important; }
+}
+
+/* KPI cards are buttons for accessibility, but they are not action buttons. */
+button.summary-card {
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+}
+button.summary-card:hover {
+    background: inherit;
+}
+
+/* Status names are used on both rows and badges. Reset rows to normal table rows. */
+tr.status-reorder,
+tr.status-low,
+tr.status-ok {
+    border-radius: 0;
+    display: table-row;
+    font-size: inherit;
+    font-weight: inherit;
+    padding: 0;
+    white-space: normal;
+}
+
+tr.status-reorder { background: color-mix(in srgb, var(--danger-soft) 45%, transparent); color: var(--ink); }
+tr.status-low { background: color-mix(in srgb, var(--warning-soft) 45%, transparent); color: var(--ink); }
+tr.status-ok { background: transparent; color: var(--ink); }
+
+/* ForeSight brand mark */
+.nav-brand::before {
+    background: #55c2af;
+    border-radius: 50% 50% 50% 0;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #55c2af 14%, transparent);
+    height: .72rem;
+    margin-right: .55rem;
+    width: .72rem;
+}
+
+/* SKU is maintained in Inventory, but kept out of the Dashboard summary table. */
+#forecast-table th:nth-child(2),
+#forecast-table td:nth-child(2) { display: none; }
+
+/* Standard deviation still powers safety stock, but is kept out of the compact dashboard table. */
+#forecast-table th:nth-child(6),
+#forecast-table td:nth-child(6) { display: none; }
+
+#forecast-table { min-width: 1200px; }
+#forecast-table th:first-child,
+#forecast-table td:first-child { width: 275px; }
+#forecast-table th:nth-child(3), #forecast-table td:nth-child(3) { width: 85px; }
+#forecast-table th:nth-child(4), #forecast-table td:nth-child(4) { width: 90px; }
+#forecast-table th:nth-child(5), #forecast-table td:nth-child(5) { width: 110px; }
+#forecast-table th:nth-child(n+7):nth-child(-n+10),
+#forecast-table td:nth-child(n+7):nth-child(-n+10) { width: 110px; }
+#forecast-table th:nth-child(11), #forecast-table td:nth-child(11) { width: 120px; }
