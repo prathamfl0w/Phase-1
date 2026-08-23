@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForeSight - Demand Forecasting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            ForeSight
+            <span class="slogan">Predicts reorder timing from sales velocity.</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#forecast-section">Forecast Window</a></li>
+            <li><a href="#product-form">Add Product</a></li>
+            <li><a href="#sale-form">Log Sale</a></li>
+            <li><a href="#" onclick="alert('Login will be implemented in Phase 2!')">Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="summary-grid">
+        <div class="summary-card" id="stat-total">
+            <span class="count">0</span>
+            <span class="label">Products tracked</span>
+        </div>
+        <div class="summary-card" id="stat-reorder">
+            <span class="count">0</span>
+            <span class="label">Need reordering</span>
+        </div>
+        <div class="summary-card" id="stat-low">
+            <span class="count">0</span>
+            <span class="label">Running low</span>
+        </div>
+        <div class="summary-card" id="stat-ok">
+            <span class="count">0</span>
+            <span class="label">Healthy</span>
+        </div>
+    </div>
+
+    <form id="product-form" class="card">
+        <h2>Add Product</h2>
+        <div class="form-row">
+            <label for="product-name">Name</label>
+            <input type="text" id="product-name" required>
+        </div>
+
+        <div class="form-row">
+            <label for="product-category">Category</label>
+            <input type="text" id="product-category" required>
+        </div>
+        <div class="form-row">
+            <label for="product-stock">Current Stock</label>
+            <input type="number" id="product-stock" min="0" required>
+        </div>
+        <div class="form-row">
+            <label for="product-leadtime">Lead Time (Days)</label>
+            <input type="number" id="product-leadtime" min="1" required>
+        </div>
+        <div class="form-row">
+            <label for="product-cost">Unit Cost</label>
+            <input type="number" id="product-cost" min="0" step="0.01" required>
+        </div>
+        <button type="submit">Add product</button>
+    </form>
+
+    <form id="sale-form" class="card">
+        <h2>Log Sale</h2>
+        <div class="form-row">
+            <label for="sale-category">Category</label>
+            <select id="sale-category" required>
+                <option value="">Select a category...</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="sale-product">Product</label>
+            <select id="sale-product" required disabled>
+                <option value="">Select a category first...</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="sale-quantity">Quantity</label>
+            <input type="number" id="sale-quantity" min="1" required>
+        </div>
+        <div class="form-row">
+            <label for="sale-date">Date</label>
+            <input type="date" id="sale-date" required>
+        </div>
+        <button type="submit">Log sale</button>
+    </form>
+
+    <div class="window-control" id="forecast-section">
+        <label for="window-days">Forecast window</label>
+        <select id="window-days">
+            <option value="7">7</option>
+            <option value="14">14</option>
+            <option value="30" selected>30</option>
+            <option value="60">60</option>
+        </select>
+        <button id="btn-demo">Load 60 days of demo data</button>
+        <button id="btn-clear">Clear all data</button>
+    </div>
+
+    <div class="table-scroll">
+        <table id="forecast-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>In stock</th>
+                    <th>Lead time</th>
+                    <th>Avg daily demand</th>
+                    <th>Std dev</th>
+                    <th>Safety stock</th>
+                    <th>Reorder point</th>
+                    <th>Days left</th>
+                    <th>Suggested order</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="forecast-body">
+            </tbody>
+        </table>
+    </div>
+
+    <p id="empty-state">No products yet. Add one above, or load the demo data.</p>
+
+    <!-- Modal for popup -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Items</h2>
+                <button id="modal-close">&times;</button>
+            </div>
+            <div id="modal-list" class="modal-list-container"></div>
+        </div>
+    </div>
+
+    <div id="toast" aria-live="polite" class="hidden"></div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/forecast.js"></script>
+    <script src="js/demo-data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
