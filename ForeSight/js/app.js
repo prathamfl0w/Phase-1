@@ -203,7 +203,9 @@
         }, 2500);
     }
 
-    document.getElementById("product-form").addEventListener("submit", function (e) {
+    const productForm = document.getElementById("product-form");
+    if (productForm) {
+    productForm.addEventListener("submit", function (e) {
         e.preventDefault();
         const nameInput = document.getElementById("product-name");
         const skuInput = document.getElementById("product-sku");
@@ -235,6 +237,7 @@
         render();
         showToast("Product added successfully");
     });
+    }
 
     document.getElementById("sale-form").addEventListener("submit", function (e) {
         e.preventDefault();
@@ -366,6 +369,20 @@
     });
 
     document.addEventListener("DOMContentLoaded", function () {
+        // Keep the daily workflow in order: log a sale, then review its updated forecast.
+        const saleCard = document.querySelector(".sale-card");
+        const forecastPanel = document.querySelector(".workspace-card:not(.sale-card)");
+        const headerSaleLink = document.querySelector(".quick-actions .button-secondary");
+
+        if (saleCard && forecastPanel) {
+            forecastPanel.id = "forecast-panel";
+            forecastPanel.before(saleCard);
+        }
+
+        if (headerSaleLink) {
+            headerSaleLink.remove();
+        }
+
         const todayISO = new Date().toISOString().split('T')[0];
         const dateInput = document.getElementById("sale-date");
         dateInput.value = todayISO;

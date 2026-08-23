@@ -49,6 +49,19 @@ window.DemoData = {
             { name: "🕰️ Vintage Desk Clock", category: "Decorations", currentStock: 15, leadTimeDays: 30, unitCost: 800 }
         ];
         
+        // Give every demo product a readable SKU so the dashboard table is complete.
+        const categoryPrefix = {
+            Groceries: "GRC",
+            Stationery: "STN",
+            Clothing: "CLT",
+            Accessories: "ACC",
+            Decorations: "DEC"
+        };
+
+        for (let i = 0; i < products.length; i++) {
+            products[i].sku = `${categoryPrefix[products[i].category]}-${String(i + 1).padStart(3, "0")}`;
+        }
+
         const savedProducts = [];
         for (let i = 0; i < products.length; i++) {
             savedProducts.push(window.Store.addProduct(products[i]));
