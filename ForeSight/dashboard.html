@@ -1,141 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard | ForeSight</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<nav class="navbar">
-<a class="nav-brand" href="index.html">ForeSight <span class="slogan">Demand-based inventory planning</span>
-</a>
-<ul class="nav-links">
-<li>
-<a href="index.html">Home</a>
-</li>
-<li>
-<a class="active" href="dashboard.html">Dashboard</a>
-</li>
-<li>
-<a href="inventory.html">Inventory</a>
-</li>
-<li>
-<a href="analytics.html">Analytics</a>
-</li>
-</ul>
-<a class="nav-cta" href="inventory.html#product-form">Add product</a>
-</nav>
-<main class="app-page">
-<header class="dashboard-header">
-<div>
-<p class="eyebrow">Today’s inventory overview</p>
-<h1>Dashboard</h1>
-<p>Review demand-based reorder recommendations at a glance.</p>
-</div>
-<div class="quick-actions">
-<a class="button-link" href="inventory.html#product-form">Add product</a>
-<a class="button-secondary" href="#sale-form">Log sale</a>
-</div>
-</header>
-<section class="summary-grid">
-<button class="summary-card" id="stat-total" type="button">
-<span class="count">0</span>
-<span class="label">Products tracked</span>
-</button>
-<button class="summary-card status-card-reorder" id="stat-reorder" type="button">
-<span class="count">0</span>
-<span class="label">Need reordering</span>
-</button>
-<button class="summary-card status-card-low" id="stat-low" type="button">
-<span class="count">0</span>
-<span class="label">Running low</span>
-</button>
-<button class="summary-card status-card-ok" id="stat-ok" type="button">
-<span class="count">0</span>
-<span class="label">Healthy</span>
-</button>
-</section>
-<section class="workspace-card">
-<div class="section-toolbar">
-<div>
-<h2>Forecast recommendations</h2>
-<p>Products are prioritised by reorder urgency.</p>
-</div>
-<div class="toolbar-actions">
-<select id="window-days" aria-label="Forecast window">
-<option value="7">Last 7 days</option>
-<option value="14">Last 14 days</option>
-<option value="30" selected>Last 30 days</option>
-<option value="60">Last 60 days</option>
-</select>
-<button id="btn-demo" type="button">Load demo data</button>
-<button id="btn-clear" class="button-danger" type="button">Clear data</button>
-</div>
-</div>
-<div class="table-scroll">
-<table id="forecast-table">
-<thead>
-<tr>
-<th>Product</th>
-<th>In stock</th>
-<th>Lead time</th>
-<th>Avg daily demand</th>
-<th>Std dev</th>
-<th>Safety stock</th>
-<th>Reorder point</th>
-<th>Days left</th>
-<th>Suggested order</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody id="forecast-body">
-</tbody>
-</table>
-</div>
-<p id="empty-state">No products yet. Add a product or load the demo data to see your forecast.</p>
-</section>
-<section class="workspace-card sale-card">
-<div>
-<p class="eyebrow">Update inventory</p>
-<h2>Log a sale</h2>
-<p>Every record improves the demand forecast for that product.</p>
-</div>
-<form id="sale-form">
-<div class="form-row">
-<label for="sale-category">Category</label>
-<select id="sale-category" required>
-<option value="">Select a category...</option>
-</select>
-</div>
-<div class="form-row">
-<label for="sale-product">Product</label>
-<select id="sale-product" required disabled>
-<option value="">Select a category first...</option>
-</select>
-</div>
-<div class="form-row">
-<label for="sale-quantity">Quantity</label>
-<input type="number" id="sale-quantity" min="1" required>
-</div>
-<div class="form-row">
-<label for="sale-date">Date</label>
-<input type="date" id="sale-date" required>
-</div>
-<button type="submit">Log sale</button>
-</form>
-</section>
-</main>
-<div id="toast" aria-live="polite" class="hidden">
-</div>
-<script src="js/storage.js">
-</script>
-<script src="js/forecast.js">
-</script>
-<script src="js/demo-data.js">
-</script>
-<script src="js/app.js">
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | ForeSight</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a class="nav-brand" href="index.html"
+        >ForeSight <span class="slogan">Demand-based inventory planning</span>
+      </a>
+      <ul class="nav-links">
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a class="active" href="dashboard.html">Dashboard</a>
+        </li>
+        <li>
+          <a href="inventory.html">Inventory</a>
+        </li>
+        <li>
+          <a href="analytics.html">Analytics</a>
+        </li>
+      </ul>
+      <a class="nav-cta" href="inventory.html#product-form">Add product</a>
+    </nav>
+    <main class="app-page">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Today’s inventory overview</p>
+          <h1>Dashboard</h1>
+          <p>Review demand-based reorder recommendations at a glance.</p>
+        </div>
+        <div class="quick-actions">
+          <a class="button-link" href="inventory.html#product-form"
+            >Add product</a
+          >
+          <a class="button-secondary" href="#sale-form">Log sale</a>
+        </div>
+      </header>
+      <section class="summary-grid">
+        <button class="summary-card" id="stat-total" type="button">
+          <span class="count">0</span>
+          <span class="label">Products tracked</span>
+        </button>
+        <button
+          class="summary-card status-card-reorder"
+          id="stat-reorder"
+          type="button"
+        >
+          <span class="count">0</span>
+          <span class="label">Need reordering</span>
+        </button>
+        <button
+          class="summary-card status-card-low"
+          id="stat-low"
+          type="button"
+        >
+          <span class="count">0</span>
+          <span class="label">Running low</span>
+        </button>
+        <button class="summary-card status-card-ok" id="stat-ok" type="button">
+          <span class="count">0</span>
+          <span class="label">Healthy</span>
+        </button>
+      </section>
+      <section class="workspace-card">
+        <div class="section-toolbar">
+          <div>
+            <h2>Forecast recommendations</h2>
+            <p>Products are prioritised by reorder urgency.</p>
+          </div>
+          <div class="toolbar-actions">
+            <select id="window-days" aria-label="Forecast window">
+              <option value="7">Last 7 days</option>
+              <option value="14">Last 14 days</option>
+              <option value="30" selected>Last 30 days</option>
+              <option value="60">Last 60 days</option>
+            </select>
+            <button id="btn-demo" type="button">Load demo data</button>
+            <button id="btn-clear" class="button-danger" type="button">
+              Clear data
+            </button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table id="forecast-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>In stock</th>
+                <th>Lead time</th>
+                <th>Avg daily demand</th>
+                <th>Std dev</th>
+                <th>Safety stock</th>
+                <th>Reorder point</th>
+                <th>Days left</th>
+                <th>Suggested order</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="forecast-body"></tbody>
+          </table>
+        </div>
+        <p id="empty-state">
+          No products yet. Add a product or load the demo data to see your
+          forecast.
+        </p>
+      </section>
+      <section class="workspace-card sale-card">
+        <div>
+          <p class="eyebrow">Update inventory</p>
+          <h2>Log a sale</h2>
+          <p>Every record improves the demand forecast for that product.</p>
+        </div>
+        <form id="sale-form">
+          <div class="form-row">
+            <label for="sale-category">Category</label>
+            <select id="sale-category" required>
+              <option value="">Select a category...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="sale-product">Product</label>
+            <select id="sale-product" required disabled>
+              <option value="">Select a category first...</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="sale-quantity">Quantity</label>
+            <input type="number" id="sale-quantity" min="1" required />
+          </div>
+          <div class="form-row">
+            <label for="sale-date">Date</label>
+            <input type="date" id="sale-date" required />
+          </div>
+          <button type="submit">Log sale</button>
+        </form>
+      </section>
+    </main>
+    <div id="toast" aria-live="polite" class="hidden"></div>
+    <script src="js/storage.js"></script>
+    <script src="js/forecast.js"></script>
+    <script src="js/demo-data.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>

@@ -13,34 +13,34 @@ and LocalStorage.
 
 Phase 1 is a working browser-based prototype built with:
 
--   HTML
--   CSS
--   JavaScript
--   LocalStorage
+- HTML
+- CSS
+- JavaScript
+- LocalStorage
 
 No backend or database is required for this phase.
 
 ## Features
 
--   Add inventory products
--   Record sales
--   Automatically reduce current stock when a sale is recorded
--   Store products and sales using LocalStorage
--   Calculate average daily demand
--   Calculate demand standard deviation
--   Calculate safety stock
--   Calculate reorder point
--   Calculate days of stock left
--   Calculate suggested order quantity
--   Classify inventory as:
-    -   `REORDER_NOW`
-    -   `LOW`
-    -   `OK`
--   Change the forecasting window between 7, 14, 30, and 60 days
--   Display inventory statistics
--   Load realistic demonstration data
--   Clear stored data
--   Keep data after refreshing the browser
+- Add inventory products
+- Record sales
+- Automatically reduce current stock when a sale is recorded
+- Store products and sales using LocalStorage
+- Calculate average daily demand
+- Calculate demand standard deviation
+- Calculate safety stock
+- Calculate reorder point
+- Calculate days of stock left
+- Calculate suggested order quantity
+- Classify inventory as:
+  - `REORDER_NOW`
+  - `LOW`
+  - `OK`
+- Change the forecasting window between 7, 14, 30, and 60 days
+- Display inventory statistics
+- Load realistic demonstration data
+- Clear stored data
+- Keep data after refreshing the browser
 
 ## Forecasting Logic
 
@@ -49,7 +49,7 @@ of days. Days with no sales are counted as zero demand.
 
 ### Average Daily Demand
 
-``` text
+```text
 avgDailyDemand = mean(daily sales series)
 ```
 
@@ -57,26 +57,26 @@ avgDailyDemand = mean(daily sales series)
 
 The prototype uses:
 
-``` text
+```text
 safetyStock = z × demandStdDev × √leadTimeDays
 ```
 
 The default value of `z` is:
 
-``` text
+```text
 z = 1.65
 ```
 
 ### Reorder Point
 
-``` text
+```text
 reorderPoint =
 (avgDailyDemand × leadTimeDays) + safetyStock
 ```
 
 ### Days of Stock Left
 
-``` text
+```text
 daysOfStockLeft =
 currentStock / avgDailyDemand
 ```
@@ -86,7 +86,7 @@ dividing by zero.
 
 ### Suggested Order Quantity
 
-``` text
+```text
 suggestedOrderQty =
 ceil(
   avgDailyDemand × (leadTimeDays + reviewPeriodDays)
@@ -101,7 +101,7 @@ The result is never below zero.
 
 ### Product
 
-``` text
+```text
 {
   id,
   name,
@@ -114,7 +114,7 @@ The result is never below zero.
 
 ### Sale Record
 
-``` text
+```text
 {
   id,
   productId,
@@ -125,13 +125,13 @@ The result is never below zero.
 
 In Phase 1, `saleDate` uses the format:
 
-``` text
+```text
 YYYY-MM-DD
 ```
 
 ### Forecast Row
 
-``` text
+```text
 {
   productId,
   name,
@@ -150,7 +150,7 @@ YYYY-MM-DD
 
 ## Project Structure
 
-``` text
+```text
 phase1/
 ├── index.html
 ├── css/
@@ -205,49 +205,53 @@ than hard-coded dates.
 
 Before evaluation, verify the following:
 
--   The dashboard loads without console errors.
--   A new product can be added.
--   A product appears in the forecast table after being added.
--   A sale can be recorded.
--   Recording a sale reduces the product's stock.
--   Forecast values update after sales are recorded.
--   A product can become `REORDER_NOW` when its stock falls below its
-    reorder point.
--   Products are ordered with `REORDER_NOW` first, then `LOW`, then
-    `OK`.
--   Changing the forecast window changes the calculated values.
--   Reloading the browser keeps the stored data.
--   Clearing the data removes the stored inventory and sales.
--   Demo data displays all important inventory statuses.
--   The application works at a narrow mobile width.
--   No important content overflows horizontally.
+- The dashboard loads without console errors.
+- A new product can be added.
+- A product appears in the forecast table after being added.
+- A sale can be recorded.
+- Recording a sale reduces the product's stock.
+- Forecast values update after sales are recorded.
+- A product can become `REORDER_NOW` when its stock falls below its
+  reorder point.
+- Products are ordered with `REORDER_NOW` first, then `LOW`, then
+  `OK`.
+- Changing the forecast window changes the calculated values.
+- Reloading the browser keeps the stored data.
+- Clearing the data removes the stored inventory and sales.
+- Demo data displays all important inventory statuses.
+- The application works at a narrow mobile width.
+- No important content overflows horizontally.
 
 ## Team Contributions
 
 This project is developed by a three-member team.
 
-  -----------------------------------------------------------------------
-  Team Member                         Contribution
-  ----------------------------------- -----------------------------------
-  Member 1                            Phase 1 page structure, interface,
-                                      and styling
+---
 
-  Member 2                            LocalStorage data layer and
-                                      forecasting calculations
+Team Member Contribution
 
-  Member 3                            Page integration, application flow,
-                                      and demonstration data
-  -----------------------------------------------------------------------
+---
+
+Member 1 Phase 1 page structure, interface,
+and styling
+
+Member 2 LocalStorage data layer and
+forecasting calculations
+
+Member 3 Page integration, application flow,
+and demonstration data
+
+---
 
 The GitHub repository contains individual commits and branches where
 appropriate so that each team member's contribution is visible.
 
 ## Technologies
 
--   HTML5
--   CSS3
--   JavaScript
--   Browser LocalStorage
+- HTML5
+- CSS3
+- JavaScript
+- Browser LocalStorage
 
 ## Phase 1 Scope
 

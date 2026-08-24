@@ -1,13 +1,84 @@
 (function () {
-    const favicon = document.createElement("link");
-    favicon.rel = "icon";
-    favicon.type = "image/svg+xml";
-    favicon.href = "favicon.svg";
-    document.head.appendChild(favicon);
+  const favicon = document.createElement("link");
+  favicon.rel = "icon";
+  favicon.type = "image/svg+xml";
+  favicon.href = "favicon.svg";
+  document.head.appendChild(favicon);
 
-    const iso = () => new Date().toISOString().split("T")[0];
-    const statusClass = status => status === "REORDER_NOW" ? "status-reorder" : status === "LOW" ? "status-low" : "status-ok";
-    const label = status => status === "REORDER_NOW" ? "Reorder now" : status === "LOW" ? "Running low" : "Healthy";
-    function render() { const days = Number(document.getElementById("analytics-window").value), products = Store.getProducts(), sales = Store.getSales(), today = iso(); const rows = products.map(p => ({ p, f: Forecast.calculateForecast({ sales: Store.getSalesForProduct(p.id), currentStock: p.currentStock, leadTimeDays: p.leadTimeDays, windowDays: days, todayISO: today }) })); const totalSales = rows.reduce((sum, row) => sum + row.f.avgDailyDemand * days, 0); const best = rows.slice().sort((a,b) => b.f.avgDailyDemand - a.f.avgDailyDemand)[0]; const value = products.reduce((sum,p) => sum + Number(p.currentStock) * Number(p.unitCost), 0); document.getElementById("analytics-sales").textContent = Math.round(totalSales); document.getElementById("analytics-demand").textContent = (totalSales / days).toFixed(1); document.getElementById("analytics-best").textContent = best && best.f.avgDailyDemand > 0 ? best.p.name : "—"; document.getElementById("analytics-value").textContent = `₹${value.toFixed(0)}`; document.getElementById("analytics-empty").classList.toggle("hidden", products.length > 0); document.getElementById("analytics-body").innerHTML = rows.map(({p,f}) => `<tr><td>${p.name}</td><td>${f.avgDailyDemand}</td><td>${f.demandStdDev}</td><td><span class="${statusClass(f.status)}">${label(f.status)}</span></td></tr>`).join(""); const series = Forecast.buildDailyDemandSeries(sales, days, today), max = Math.max(...series, 1); document.getElementById("trend-chart").innerHTML = series.map((value, index) => `<span title="Day ${index + 1}: ${value} units" style="height:${Math.max(4, value / max * 100)}%"></span>`).join(""); const high = rows.slice().sort((a,b) => b.f.demandStdDev-a.f.demandStdDev)[0]; document.getElementById("insights-list").innerHTML = products.length ? `<p><strong>Fast-moving:</strong> ${best && best.f.avgDailyDemand > 0 ? best.p.name : "No sales recorded yet"}</p><p><strong>Most variable:</strong> ${high ? high.p.name : "—"}</p><p><strong>Urgent products:</strong> ${rows.filter(r => r.f.status === "REORDER_NOW").length}</p>` : ""; }
-    document.getElementById("analytics-window").addEventListener("change", render); render();
-}());
+  const iso = () => new Date().toISOString().split("T")[0];
+  const statusClass = (status) =>
+    status === "REORDER_NOW"
+      ? "status-reorder"
+      : status === "LOW"
+        ? "status-low"
+        : "status-ok";
+  const label = (status) =>
+    status === "REORDER_NOW"
+      ? "Reorder now"
+      : status === "LOW"
+        ? "Running low"
+        : "Healthy";
+  function render() {
+    const days = Number(document.getElementById("analytics-window").value),
+      products = Store.getProducts(),
+      sales = Store.getSales(),
+      today = iso();
+    const rows = products.map((p) => ({
+      p,
+      f: Forecast.calculateForecast({
+        sales: Store.getSalesForProduct(p.id),
+        currentStock: p.currentStock,
+        leadTimeDays: p.leadTimeDays,
+        windowDays: days,
+        todayISO: today,
+      }),
+    }));
+    const totalSales = rows.reduce(
+      (sum, row) => sum + row.f.avgDailyDemand * days,
+      0,
+    );
+    const best = rows
+      .slice()
+      .sort((a, b) => b.f.avgDailyDemand - a.f.avgDailyDemand)[0];
+    const value = products.reduce(
+      (sum, p) => sum + Number(p.currentStock) * Number(p.unitCost),
+      0,
+    );
+    document.getElementById("analytics-sales").textContent =
+      Math.round(totalSales);
+    document.getElementById("analytics-demand").textContent = (
+      totalSales / days
+    ).toFixed(1);
+    document.getElementById("analytics-best").textContent =
+      best && best.f.avgDailyDemand > 0 ? best.p.name : "—";
+    document.getElementById("analytics-value").textContent =
+      `₹${value.toFixed(0)}`;
+    document
+      .getElementById("analytics-empty")
+      .classList.toggle("hidden", products.length > 0);
+    document.getElementById("analytics-body").innerHTML = rows
+      .map(
+        ({ p, f }) =>
+          `<tr><td>${p.name}</td><td>${f.avgDailyDemand}</td><td>${f.demandStdDev}</td><td><span class="${statusClass(f.status)}">${label(f.status)}</span></td></tr>`,
+      )
+      .join("");
+    const series = Forecast.buildDailyDemandSeries(sales, days, today),
+      max = Math.max(...series, 1);
+    document.getElementById("trend-chart").innerHTML = series
+      .map(
+        (value, index) =>
+          `<span title="Day ${index + 1}: ${value} units" style="height:${Math.max(4, (value / max) * 100)}%"></span>`,
+      )
+      .join("");
+    const high = rows
+      .slice()
+      .sort((a, b) => b.f.demandStdDev - a.f.demandStdDev)[0];
+    document.getElementById("insights-list").innerHTML = products.length
+      ? `<p><strong>Fast-moving:</strong> ${best && best.f.avgDailyDemand > 0 ? best.p.name : "No sales recorded yet"}</p><p><strong>Most variable:</strong> ${high ? high.p.name : "—"}</p><p><strong>Urgent products:</strong> ${rows.filter((r) => r.f.status === "REORDER_NOW").length}</p>`
+      : "";
+  }
+  document
+    .getElementById("analytics-window")
+    .addEventListener("change", render);
+  render();
+})();
