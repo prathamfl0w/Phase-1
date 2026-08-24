@@ -142,17 +142,17 @@
 
       tr.innerHTML = `
                 <td>
-                    <div style="font-weight: 500; margin-bottom: 0.25rem;">${nameEscaped.innerHTML}</div>
+                    <div>${nameEscaped.innerHTML}</div>
                     <span class="category-badge">${catEscaped.innerHTML}</span>
                 </td>
                 <td>${data.product.currentStock}</td>
-                <td style="opacity: 0.5;">${data.product.leadTimeDays}d</td>
+                <td>${data.product.leadTimeDays}d</td>
                 <td>${data.forecast.avgDailyDemand}</td>
-                <td style="opacity: 0.5;">${data.forecast.demandStdDev}</td>
+                <td>${data.forecast.demandStdDev}</td>
                 <td>${data.forecast.safetyStock}</td>
-                <td><strong style="font-size: 1.05em;">${data.forecast.reorderPoint}</strong></td>
+                <td>${data.forecast.reorderPoint}</td>
                 <td>${daysLeft}</td>
-                <td><strong style="font-size: 1.05em; color: var(--primary);">${data.forecast.suggestedOrderQty}</strong></td>
+                <td>${data.forecast.suggestedOrderQty}</td>
                 <td><span class="${statusClass}">${statusText}</span></td>
             `;
       tbody.appendChild(tr);

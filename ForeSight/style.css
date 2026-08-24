@@ -977,6 +977,9 @@ select {
   gap: 1.1rem;
 }
 .summary-card {
+  background: color-mix(in srgb, var(--card) 94%, var(--canvas));
+  border-color: color-mix(in srgb, var(--line) 88%, var(--brand));
+  border-radius: 1rem;
   min-height: 130px;
   overflow: hidden;
   position: relative;
@@ -985,21 +988,17 @@ select {
     box-shadow 0.18s ease;
 }
 .summary-card::after {
-  background:
-    radial-gradient(circle at 35% 32%, rgba(105, 214, 193, 0.4), transparent 18%),
-    radial-gradient(circle at 50% 50%, rgba(105, 214, 193, 0.1) 0 33%, transparent 35%);
-  border: 1px solid color-mix(in srgb, var(--brand) 26%, var(--line));
+  background: var(--brand);
+  border: 0;
   border-radius: 50%;
-  box-shadow:
-    inset 0 0 0 6px color-mix(in srgb, var(--brand) 7%, transparent),
-    0 0 20px color-mix(in srgb, var(--brand) 10%, transparent);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand) 12%, transparent);
   content: "";
-  height: 48px;
-  opacity: 0.95;
+  height: 14px;
+  opacity: 1;
   position: absolute;
-  right: 1.1rem;
-  top: 1.1rem;
-  width: 48px;
+  right: 1.35rem;
+  top: 1.35rem;
+  width: 14px;
 }
 .summary-card:hover {
   box-shadow: 0 18px 34px rgba(20, 33, 61, 0.12);
@@ -1008,7 +1007,7 @@ select {
 .summary-card .count {
   font-size: 2.35rem;
   line-height: 1;
-  margin-top: 1.4rem;
+  margin-top: 0.35rem;
 }
 .summary-card .label {
   font-size: 0.84rem;
@@ -1016,16 +1015,20 @@ select {
   margin-top: 0.45rem;
 }
 #stat-total::after {
-  border-color: var(--brand);
+  background: var(--brand);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand) 12%, transparent);
 }
 #stat-reorder::after {
-  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--danger) 12%, transparent);
 }
 #stat-low::after {
-  border-color: var(--warning);
+  background: var(--warning);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--warning) 12%, transparent);
 }
 #stat-ok::after {
-  border-color: var(--success);
+  background: var(--success);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 12%, transparent);
 }
 
 .sale-card {
@@ -1669,11 +1672,11 @@ tr.status-ok {
 }
 
 tr.status-reorder {
-  background: color-mix(in srgb, var(--danger-soft) 45%, transparent);
+  background: color-mix(in srgb, var(--danger-soft) 62%, transparent);
   color: var(--ink);
 }
 tr.status-low {
-  background: color-mix(in srgb, var(--warning-soft) 45%, transparent);
+  background: color-mix(in srgb, var(--warning-soft) 62%, transparent);
   color: var(--ink);
 }
 tr.status-ok {
@@ -1701,6 +1704,13 @@ tr.status-ok {
 #forecast-table th:first-child,
 #forecast-table td:first-child {
   width: 275px;
+}
+#forecast-table td:not(:first-child) {
+  color: color-mix(in srgb, var(--ink) 92%, white);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
 }
 #forecast-table th:nth-child(2),
 #forecast-table td:nth-child(2) {
@@ -1733,4 +1743,22 @@ tr.status-ok {
 #forecast-table th:nth-child(10),
 #forecast-table td:nth-child(10) {
   width: 140px;
+}
+
+/* Dashboard KPIs use restrained status-tinted surfaces. */
+#stat-total.summary-card {
+  background: linear-gradient(135deg, #1b3935, #162625 72%) !important;
+  border-color: #32675e;
+}
+#stat-reorder.summary-card {
+  background: linear-gradient(135deg, #382827, #1b2726 72%) !important;
+  border-color: #74433e;
+}
+#stat-low.summary-card {
+  background: linear-gradient(135deg, #39321f, #1d2825 72%) !important;
+  border-color: #776237;
+}
+#stat-ok.summary-card {
+  background: linear-gradient(135deg, #203b2d, #172726 72%) !important;
+  border-color: #3d7255;
 }
