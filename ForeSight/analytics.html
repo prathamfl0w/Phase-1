@@ -28,15 +28,20 @@
           <h1>Analytics</h1>
           <p>Understand demand patterns across your current inventory.</p>
         </div>
-        <label class="window-picker" for="analytics-window"
-          >Forecast window
-          <select id="analytics-window">
-            <option value="7">7 days</option>
-            <option value="14">14 days</option>
-            <option value="30" selected>30 days</option>
-            <option value="60">60 days</option>
-          </select></label
-        >
+        <div class="analytics-controls">
+          <label class="window-picker" for="analytics-window"
+            >Forecast window
+            <select id="analytics-window">
+              <option value="7">7 days</option>
+              <option value="14">14 days</option>
+              <option value="30" selected>30 days</option>
+              <option value="60">60 days</option>
+            </select></label
+          >
+          <button id="analytics-refresh" class="button-secondary" type="button">
+            Refresh data
+          </button>
+        </div>
       </header>
       <section class="summary-grid">
         <article class="summary-card">
@@ -58,24 +63,46 @@
       </section>
       <section class="analytics-layout">
         <section class="workspace-card">
-          <h2>Demand trend</h2>
-          <p>Total units sold per day in the selected window.</p>
+          <div class="analytics-card-heading">
+            <div>
+              <h2>Demand trend</h2>
+              <p>Total units sold per day in the selected window.</p>
+            </div>
+            <div class="trend-summary">
+              <span><small>Peak day</small><strong id="trend-peak">0 units</strong></span>
+              <span><small>Active days</small><strong id="trend-active-days">0</strong></span>
+            </div>
+          </div>
           <div id="trend-chart" class="trend-chart"></div>
+          <div class="trend-axis"><span id="trend-start">—</span><span>Today</span></div>
         </section>
         <section class="workspace-card">
-          <h2>Demand insights</h2>
+          <div class="analytics-card-heading">
+            <div>
+              <h2>Demand insights</h2>
+              <p>What deserves attention right now.</p>
+            </div>
+          </div>
           <div id="insights-list" class="insights-list"></div>
         </section>
       </section>
-      <section class="workspace-card">
+      <section class="workspace-card analytics-table-card">
         <h2>Product demand comparison</h2>
         <div class="table-scroll">
-          <table>
+          <table class="analytics-comparison-table">
+            <colgroup>
+              <col class="analytics-product-column" />
+              <col class="analytics-units-column" />
+              <col class="analytics-demand-column" />
+              <col class="analytics-cover-column" />
+              <col class="analytics-status-column" />
+            </colgroup>
             <thead>
               <tr>
                 <th>Product</th>
+                <th>Units sold</th>
                 <th>Avg daily demand</th>
-                <th>Demand variability</th>
+                <th>Stock cover</th>
                 <th>Current status</th>
               </tr>
             </thead>
