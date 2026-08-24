@@ -277,21 +277,20 @@ window.DemoData = {
       for (let p = 0; p < savedProducts.length; p++) {
         const prod = savedProducts[p];
 
-        // Add some randomness and varied sales velocity based on category
         let qty = 0;
         const rand = Math.random();
 
         if (prod.category === "Groceries") {
-          qty = rand > 0.3 ? Math.floor(Math.random() * 8) + 2 : 0; // Fast moving
+          qty = rand > 0.3 ? Math.floor(Math.random() * 8) + 2 : 0; 
         } else if (prod.category === "Stationery") {
-          qty = rand > 0.5 ? Math.floor(Math.random() * 5) + 1 : 0; // Medium moving
+          qty = rand > 0.5 ? Math.floor(Math.random() * 5) + 1 : 0; 
         } else if (prod.category === "Clothing") {
-          qty = rand > 0.6 ? Math.floor(Math.random() * 3) + 1 : 0; // Slow moving
+          qty = rand > 0.6 ? Math.floor(Math.random() * 3) + 1 : 0; 
         } else if (prod.category === "Accessories") {
-          qty = rand > 0.7 ? Math.floor(Math.random() * 2) + 1 : 0; // Very slow moving
+          qty = rand > 0.7 ? Math.floor(Math.random() * 2) + 1 : 0;
         } else if (prod.category === "Decorations") {
-          qty = rand > 0.8 ? Math.floor(Math.random() * 2) + 1 : 0; // Occasional
-          if (i % 14 === 0) qty += 5; // Spikes
+          qty = rand > 0.8 ? Math.floor(Math.random() * 2) + 1 : 0;
+          if (i % 14 === 0) qty += 5;
         }
 
         if (qty > 0) {

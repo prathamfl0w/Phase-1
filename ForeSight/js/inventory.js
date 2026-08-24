@@ -24,7 +24,6 @@
   favicon.href = "favicon.svg";
   document.head.appendChild(favicon);
 
-  // Update older locally saved demo data to the current chicken product name.
   const savedProducts = Store.getProducts();
   let productNameUpdated = false;
   savedProducts.forEach((product) => {

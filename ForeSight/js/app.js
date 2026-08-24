@@ -423,7 +423,6 @@
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    // Keep the daily workflow in order: log a sale, then review its updated forecast.
     const saleCard = document.querySelector(".sale-card");
     const forecastPanel = document.querySelector(
       ".workspace-card:not(.sale-card)",
