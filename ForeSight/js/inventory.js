@@ -1,4 +1,17 @@
 (function () {
+    const categoryEmojis = {
+        Groceries: "🛒",
+        Clothing: "👕",
+        Accessories: "👜",
+        Stationery: "✏️",
+        Decorations: "🪴"
+    };
+
+    function nameWithCategoryEmoji(name, category) {
+        const emoji = categoryEmojis[category] || "📦";
+        return /^[^\w\s]/u.test(name) ? name : `${emoji} ${name}`;
+    }
+
     const analyticsLink = document.querySelector(".nav-cta");
     if (analyticsLink) {
         analyticsLink.href = "analytics.html";
@@ -33,9 +46,18 @@
         const list = document.getElementById("inventory-list");
         document.getElementById("inventory-count").textContent = `${products.length} product${products.length === 1 ? "" : "s"} shown`;
         document.getElementById("inventory-empty").classList.toggle("hidden", products.length > 0);
-        list.innerHTML = products.map(p => { const f = statusFor(p); const label = f.status === "REORDER_NOW" ? "Reorder now" : f.status === "LOW" ? "Running low" : "Healthy"; const cls = f.status === "REORDER_NOW" ? "status-reorder" : f.status === "LOW" ? "status-low" : "status-ok"; const rowClass = f.status === "REORDER_NOW" ? "inventory-reorder" : f.status === "LOW" ? "inventory-low" : "inventory-ok"; return `<article class="product-item ${rowClass}"><div><h3>${escape(p.name)}</h3><p>${escape(p.category)}</p></div><div class="product-metrics"><span><small>Stock</small>${p.currentStock} units</span><span><small>Unit cost</small>₹${Number(p.unitCost).toFixed(2)}</span><b class="${cls}">${label}</b></div></article>`; }).join("");
+        list.innerHTML = products.map(p => { const f = statusFor(p); const label = f.status === "REORDER_NOW" ? "Reorder now" : f.status === "LOW" ? "Running low" : "Healthy"; const cls = f.status === "REORDER_NOW" ? "status-reorder" : f.status === "LOW" ? "status-low" : "status-ok"; const rowClass = f.status === "REORDER_NOW" ? "inventory-reorder" : f.status === "LOW" ? "inventory-low" : "inventory-ok"; const displayName = nameWithCategoryEmoji(p.name, p.category); return `<article class="product-item ${rowClass}"><div><h3>${escape(displayName)}</h3><p>${escape(p.category)}</p></div><div class="product-metrics"><span><small>Stock</small>${p.currentStock} units</span><span><small>Unit cost</small>₹${Number(p.unitCost).toFixed(2)}</span><b class="${cls}">${label}</b><button class="product-delete" type="button" data-product-id="${p.id}" aria-label="Delete ${escape(p.name)}" title="Delete product">×</button></div></article>`; }).join("");
     }
-    document.getElementById("product-form").addEventListener("submit", function (event) { event.preventDefault(); const get = id => document.getElementById(id).value.trim(); const stock = Number(get("product-stock")), lead = Number(get("product-leadtime")), cost = Number(get("product-cost")); if (!get("product-name") || !get("product-category") || stock < 0 || lead < 1 || cost < 0) return; Store.addProduct({ name: get("product-name"), category: get("product-category"), currentStock: stock, leadTimeDays: lead, unitCost: cost }); this.reset(); render(); toast("Product added successfully"); });
+    document.getElementById("product-form").addEventListener("submit", function (event) { event.preventDefault(); const get = id => document.getElementById(id).value.trim(); const stock = Number(get("product-stock")), lead = Number(get("product-leadtime")), cost = Number(get("product-cost")); const category = get("product-category"); if (!get("product-name") || !category || stock < 0 || lead < 1 || cost < 0) return; Store.addProduct({ name: nameWithCategoryEmoji(get("product-name"), category), category, currentStock: stock, leadTimeDays: lead, unitCost: cost }); this.reset(); render(); toast("Product added successfully"); });
     document.getElementById("inventory-search").addEventListener("input", render);
+    document.getElementById("inventory-list").addEventListener("click", function (event) {
+        const button = event.target.closest(".product-delete");
+        if (!button) return;
+        if (window.confirm("Delete this product and its sales history?")) {
+            Store.removeProduct(button.dataset.productId);
+            render();
+            toast("Product deleted");
+        }
+    });
     render();
 }());

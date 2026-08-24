@@ -67,6 +67,13 @@ window.Store = {
         return this.getSales().filter(s => s.productId === productId);
     },
 
+    removeProduct: function(productId) {
+        const products = this.getProducts().filter(product => product.id !== productId);
+        const sales = this.getSales().filter(sale => sale.productId !== productId);
+        this.saveProducts(products);
+        this.saveSales(sales);
+    },
+
     clearAll: function() {
         localStorage.removeItem("irp_products");
         localStorage.removeItem("irp_sales");
